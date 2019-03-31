@@ -1,6 +1,5 @@
 const axios = require('axios');
 const crypto = require('crypto');
-const _ = require('lodash');
 
 const passwords_breach_lookup = (password) => {
     return new Promise((resolve, reject) =>  {
@@ -39,11 +38,11 @@ const passwords_breach_lookup = (password) => {
         }
 })};
 
-// passwords_breach_lookup("password").then(result => {
-//     console.log(result)
-// }).catch(err => [
-//     console.log(err)
-// ]);
+passwords_breach_lookup("123456").then(result => {
+    console.log(result)
+}).catch(err => [
+    console.log(err)
+]);
 module.exports = {
     passwords_breach_lookup
 };
