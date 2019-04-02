@@ -4,7 +4,7 @@ const hbs = require('hbs');
 const fs = require('fs');
 // const generator = require('./generator.js');
 
-const port = process.env.PORT || 8082;
+const port = process.env.PORT || 8080;
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
