@@ -18,6 +18,10 @@ generatePassword().then(result => {
     console.log(err)
 });
 
+module.exports = {
+    generatePassword
+}
+
 // console.log(generatePassword());
 
 // const generatePassword = () => {
