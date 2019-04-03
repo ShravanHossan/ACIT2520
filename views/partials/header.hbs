@@ -102,8 +102,54 @@
 		.generate-password:hover {background-color: #3e8e41}
 
 		.generate-password:active {
-		background-color: #3e8e41;
-		box-shadow: 0 5px #666;
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+		}
+
+		.breach-title {
+			font-size: 50px;
+			position: absolute;
+			top: 20%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		input[type=text], select {
+			position: absolute;
+			top: 50%;
+			left: 30%;
+			width: 30%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+
+		.submit {
+			position: absolute;
+			top: 50%;
+			left: 61%;
+			display: inline-block;
+			padding: 12px 20px;
+			font-size: 24px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: #fff;
+			background-color: #7cd1f9;
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px #999;
+		}
+
+		.submit:hover {background-color: #3dafe5}
+
+		.submit:active {
+			background-color: #3dafe5;
+			box-shadow: 0 5px #666;
 		}
 
 	</style>

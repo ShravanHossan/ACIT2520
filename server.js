@@ -2,7 +2,6 @@ const axios = require('axios');
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
-// const generator = require('./generator.js');
 
 const port = process.env.PORT || 8080;
 var app = express();
@@ -39,6 +38,9 @@ app.get('/manage', (request, response) => {
 });
 
 app.get('/breach', (request, response) => {
+	response.render('breach.hbs', {
+		title: 'Breach Logs'
+	});
 });
 
 app.listen(port, () => {

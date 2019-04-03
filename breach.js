@@ -22,7 +22,7 @@ const passwords_breach_lookup = (password) => {
 
                 if (hashed_password.substring(5, 40) === list.Passwords[line].substring(0, 35))
 
-                    resolve(`Password: ${password} was found ${list.Passwords[line].substring(36,50)} times (hash : ${hashed_password})`)
+                    resolve(`Password: ${password} was found ${list.Passwords[line].substring(36,50)} times (hash : ${hashed_password})`);
             }
 
             resolve(`${password} was not found`)
@@ -38,11 +38,12 @@ const passwords_breach_lookup = (password) => {
         }
 })};
 
-passwords_breach_lookup("123456").then(result => {
-    console.log(result)
-}).catch(err => [
-    console.log(err)
-]);
-module.exports = {
-    passwords_breach_lookup
-};
+// passwords_breach_lookup("123456").then(result => {
+//     console.log(result);
+// }).catch(err => {
+//     console.log(err);
+// });
+
+// module.exports = {
+//     passwords_breach_lookup
+// };
