@@ -7,7 +7,7 @@ const generatePassword = () => {
 		password += charset.charAt(Math.floor(Math.random() * n));
 	}
 	swal(`Your Password is: ${password}`);
-}
+};
 
 // Easier way to do it using a generate-password module
 // const generator = require('generate-password');
