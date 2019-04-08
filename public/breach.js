@@ -1,9 +1,9 @@
 const axios = require('axios');
 const crypto = require('crypto');
 
-const passwords_breach_lookup = (password) => {
+const passwords_breach_lookup = () => {
     return new Promise((resolve, reject) =>  {
-
+        const password = document.getElementById("userInput").value;
         const hash = crypto.createHash('sha1');
         try {
             let data = hash.update(password, 'utf-8');
