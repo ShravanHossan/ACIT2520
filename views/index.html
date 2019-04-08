@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>{{title}}</title>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<style>
 
@@ -95,17 +95,63 @@
 			text-decoration: none;
 			outline: none;
 			color: #fff;
-			background-color: #4CAF50;
+			background-color: #7cd1f9;
 			border: none;
 			border-radius: 15px;
 			box-shadow: 0 9px #999;
 		}
 
-		.generate-password:hover {background-color: #3e8e41}
+		.generate-password:hover {background-color: #3dafe5}
 
 		.generate-password:active {
-		background-color: #3e8e41;
-		box-shadow: 0 5px #666;
+			background-color: #3dafe5;
+			box-shadow: 0 5px #666;
+		}
+
+		.breach-title {
+			font-size: 50px;
+			position: absolute;
+			top: 20%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		input[type=text], select {
+			position: absolute;
+			top: 50%;
+			left: 30%;
+			width: 30%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+		}
+
+		.submit {
+			position: absolute;
+			top: 50%;
+			left: 61%;
+			display: inline-block;
+			padding: 12px 20px;
+			font-size: 24px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: #fff;
+			background-color: #7cd1f9;
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px #999;
+		}
+
+		.submit:hover {background-color: #3dafe5}
+
+		.submit:active {
+			background-color: #3dafe5;
+			box-shadow: 0 5px #666;
 		}
 
 	</style>
@@ -126,11 +172,12 @@
 
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
 
-<!-- Password Generator Main Page -->
-<div id="title" >
-	<h1 class="page-title">Generate A Password</h1>
-	<p class="page-info">Click the button below to generate a random password.</p>
-	<button onclick="generatePassword()" id="pass-gen" class="generate-password">Generate</button>
+<!-- Breach Main Page -->
+<div id="breach-div" >
+		<h1 class="breach-title">Has Your Password Been Breached?</h1>
+		<p class="page-info">Enter a password in the text box below to see how many times the password has been breached.</p>
+		<input type="text" id="userInput" name="input" placeholder="Enter Password">
+		<input onclick="" type="submit" class="submit" id="submitbutton" value="Submit">
 </div>
 
 
@@ -144,8 +191,19 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
+const userValue = () => {
+	var user = document.getElementById("userInput").value;
+	return user
+}
+
+module.exports = {
+	userValue
+}
+
 </script>
-<script src="../generator.js"></script>
+<script src="../public/breach.js"></script>
+
 
 </body>
 </html>

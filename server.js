@@ -2,9 +2,14 @@ const axios = require('axios');
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
+const bodyParser = require('body-parser');
+
+const breach = require('./public/breach.js');
 
 const port = process.env.PORT || 8080;
 var app = express();
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 hbs.registerPartials(__dirname + '/views/partials');
 
@@ -13,6 +18,10 @@ app.use(express.static(__dirname + '/public'));
 
 hbs.registerHelper('links', (link) => {
 	return link
+});
+
+hbs.registerHelper('message', (text) => {
+	return text;
 });
 
 app.use((request, response, next) => {
@@ -39,7 +48,21 @@ app.get('/manage', (request, response) => {
 
 app.get('/breach', (request, response) => {
 	response.render('breach.hbs', {
-		title: 'Breach Logs'
+		title: 'Breach'
+	});
+});
+
+app.post('/breach', urlencodedParser, (request, response) => {
+	breach.passwords_breach_lookup(request.body.password).then((message) => {
+		response.render('breach.hbs', {
+			title: 'Breach',
+			output: message
+		});
+	}).catch((error) => {
+		response.render('breach.hbs', {
+			title: 'Breach',
+			output: error
+		});
 	});
 });
 

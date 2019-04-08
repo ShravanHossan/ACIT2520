@@ -38,12 +38,6 @@ const passwords_breach_lookup = (password) => {
         }
 })};
 
-// passwords_breach_lookup("123456").then(result => {
-//     console.log(result);
-// }).catch(err => {
-//     console.log(err);
-// });
-
-// module.exports = {
-//     passwords_breach_lookup
-// };
+module.exports = {
+    passwords_breach_lookup
+};
