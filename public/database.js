@@ -16,10 +16,10 @@ app.get('/getWebsite', function(request, response) {
 
     var email = request.body.email;
     var websites = request.body.websites;
-    // console.log(request.body.email);
-    // console.log(request.body.websites);
+
     var db = utils.getDb();
-    db.collection('accounts').find( {$and: [ {email: email}, {websites: websites} ] } ).toArray(function(err, result) {
+    db.collection('accounts').find({ $and: [{email: email}, {websites: websites}] }).toArray(function(err, result) {
+        console.log(result);
         if (err) throw err;
         response.send(result)
     });
@@ -30,17 +30,27 @@ app.get('/getWebsite', function(request, response) {
 //Delete a password using the associated website
 app.delete('/delWebsite', function(request, response) {
 
-    var website = request.body.website;
+    var email = request.body.email;
+    var websites = request.body.websites;
 
     var db = utils.getDb();
-    db.collection('accounts').deleteOne({website: website}, function(err, result) {
-    }, (err, result) => {
-        if (err) {
-            response.send('Unable to delete account')
-        }
-        response.send(JSON.stringify(result.ops, undefined, 2))
+    db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
+        console.log(result);
+        if (err) throw err;
+        response.send(result)
     });
+
 });
+
+//     var db = utils.getDb();
+//     db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
+//     }, (err, result) => {
+//         if (err) {
+//             response.send('Unable to delete account')
+//         }
+//         response.send(JSON.stringify(result.ops, undefined, 2))
+//     });
+// });
 
 
 //Get all passwords associated with an email
