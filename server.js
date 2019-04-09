@@ -59,7 +59,7 @@ app.get('/login', (request, response) => {
 });
 
 app.get('/sign-up', (request, response) => {
-    response.render('sign up.hbs', {
+    response.render('sign-up.hbs', {
         title: 'Sign up'
     });
 });
