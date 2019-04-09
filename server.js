@@ -5,6 +5,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const breach = require('./public/breach.js');
+const manager = require('./public/manager.js');
 
 const port = process.env.PORT || 8080;
 var app = express();
@@ -44,6 +45,18 @@ app.get('/generate', (request, response) => {
 });
 
 app.get('/manage', (request, response) => {
+	response.render('manager.hbs', {
+		title: 'Password Manager'
+	});
+});
+
+app.post('/manage', urlencodedParser, (request, response) => {
+	manager.add_password(request.body.username, request.body.url, request.body.password).then((message) => {
+		response.render('manager.hbs', {
+			title: 'Password Manager',
+			output: message
+		});
+	});
 });
 
 app.get('/breach', (request, response) => {

@@ -3,8 +3,8 @@
 	<p class="page-info">Enter a password in the text box below to see how many times the password has been breached.</p>
 
 	<form id="pass-form" method="POST" action="/breach">
-		<input type="text" id="userInput" name="password" placeholder="Enter a password">
-		<input type="submit" value="Submit" class="submit">
+		<input type="text" id="userInput" class="userInput" name="password" placeholder="Enter a password">
+		<input type="submit" value="Submit" class="breach-submit">
 	</form>
 	<p class="output" id="output">{{output}}</p>
 </div>
