@@ -1,9 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const express = require("express");
-//const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
-
-var utils = require('./utils');
+const utils = require('./utils');
 const app = express();
 
 app.use(bodyParser.json());
@@ -19,7 +17,6 @@ app.get('/getWebsite', function(request, response) {
 
     var db = utils.getDb();
     db.collection('accounts').find({ $and: [{email: email}, {websites: websites}] }).toArray(function(err, result) {
-        console.log(result);
         if (err) throw err;
         response.send(result)
     });
@@ -35,23 +32,11 @@ app.delete('/delWebsite', function(request, response) {
 
     var db = utils.getDb();
     db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
-        console.log(result);
         if (err) throw err;
         response.send(result)
     });
 
 });
-
-//     var db = utils.getDb();
-//     db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
-//     }, (err, result) => {
-//         if (err) {
-//             response.send('Unable to delete account')
-//         }
-//         response.send(JSON.stringify(result.ops, undefined, 2))
-//     });
-// });
-
 
 //Get all passwords associated with an email
 app.get('/getEmail', function(request, response) {
@@ -89,14 +74,6 @@ app.post('/addAccount', function(request, response) {
         website: request.body.website,
         password: request.body.password
     };
-
-
-        // email: request.body.email,
-        // pairs:[{
-        //     websites: request.body.websites,
-        //     passwords: request.body.passwords
-        // }]
-
 
     var db = utils.getDb();
     db.collection('accounts').insertOne(account, function(err, result) {
