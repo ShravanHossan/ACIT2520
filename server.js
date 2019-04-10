@@ -217,8 +217,14 @@ app.post('/delWebsite', function(request, response) {
 
     var db = utils.getDb();
     db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
-        if (err) throw err;
-        response.send(result)
+        if (err) {
+            response.send(err)
+        }
+        // response.send(result)
+        // response.send(JSON.stringify(result.ops, undefined, 2))]
+        response.render('deletepassword.hbs', {
+            output: "Password Deleted"
+        })
     });
 
 });
