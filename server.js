@@ -8,8 +8,6 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const breach = require('./public/breach.js');
 const manager = require('./public/manager.js');
-const utils = require('./public/utils.js');
-const MongoClient = require('mongodb').MongoClient;
 const session = require('express-session');
 
 
