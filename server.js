@@ -234,7 +234,7 @@ app.post('/newUser', function (req, res) {
     })
 });
 
-app.post('/signout', (req, res) => {
+app.post('/sign-out', (req, res) => {
     req.session.destroy()
 });
 
