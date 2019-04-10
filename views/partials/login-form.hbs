@@ -2,8 +2,8 @@
 	<h1 class="Login-title">Login</h1>
 
 	<form id="login-form" method="POST" action="/login">
-        <input type="text" id="userInputEmail" class="userEmail" name="email" placeholder="Enter an email">
-		<input type="password" id="userInputPassword" class="userPassword" name="password" placeholder="Enter a password">
+        <input type="text" id="userInputEmail" class="userEmail" name="email" placeholder="Enter an email " required>
+		<input type="password" id="userInputPassword" class="userPassword" name="password" placeholder="Enter a password" required>
 		<input type="submit" value="Submit" class="loginsubmit">
 	</form>
 	<p class="err" id="err">{{error}}</p>
