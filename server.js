@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const breach = require('./public/breach.js');
 const manager = require('./public/manager.js');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 
 
@@ -17,20 +18,31 @@ const port = process.env.PORT || 8080;
 
 var app = express();
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
-
-var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
 app.set('trust proxy', 1); // trust first proxy
 app.use(session({
     secret: 'very safe',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
+    resave: true,
+    saveUninitialized: false,
 }));
+
+app.use((request, response, next) => {
+    var time = new Date().toString();
+    // console.log(`${time}: ${request.method} ${request.url}`);
+    var log = `${time}: ${request.method} ${request.url}`;
+    fs.appendFile('server.log', log + '\n', (error) => {
+        if (error) {
+            console.log('Unable to log message');
+        }
+    });
+    next();
+
+});
+
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 
@@ -87,9 +99,7 @@ app.get('/sign-up', (request, response) => {
 });
 
 app.get('/manage', (request, response) => {
-    if (request.session.id != null){
-        console.log("Session works")
-    }
+
 	response.render('manager.hbs', {
 		title: 'Password Manager'
 	});
@@ -106,14 +116,23 @@ app.get('/manage', (request, response) => {
 
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
+    if (request.session.id != null){
+
+
+    }else
+        var db = utils.getDb();
+        db.collection.find({_id: request.session.user}).toArray((err, email) => {
+
+    });
+
+
 
 	var account = {
-		// email: request.body.email,
+        email: email._id,
 		website: request.body.website,
 		password: request.body.password
 	};
 
-	var db = utils.getDb();
 	db.collection('accounts').insertOne(account, function (err, result) {
 		if (err) {
 			response.send('Unable to insert account');
@@ -148,19 +167,8 @@ app.post('/breach', urlencodedParser, (request, response) => {
 	});
 });
 
-MongoClient.connect('mongodb://localhost:27017/test', function(err, database) {
-	if (err) {
-		return console.log('Unable to connect to DB');
-
-	}
-	database.close()
-});
 
 app.post('/manage', urlencodedParser, (request, response) => {
-	if (request.session.id != null){
-	    console.log("Session works")
-    }
-
     manager.add_password(request.body.username, request.body.url, request.body.password).then((message) => {
 		response.render('manager.hbs', {
 			title: 'Password Manager',
@@ -190,15 +198,12 @@ app.post('/breach', urlencodedParser, (request, response) => {
 });
 app.post('/login-entry', (req, res) => {
     let db = utils.getDb();
-    // console.log(db);
-    // console.log(req.body.email);
     db.collection('users').find({_id: req.body.email}).toArray((err, result) => {
         if (err) {
             res.send(err)
         }
         try {
             if (bcrypt.compareSync(req.body.password, (result[0].hash))) {
-                console.log("good login");
 
                 req.session.user = req.body.email;
                 res.redirect('/manage');
@@ -233,21 +238,26 @@ app.post('/newUser', function (req, res) {
 });
 
 app.get('/sign-out', (req, res) => {
-    req.session.destroy()
-});
+    req.session.destroy(function (err) {
 
+        try {
+            console.log(req.session.user)
+        }catch(e){
+            let time = new Date().toString();
+            let log = `${time}: ${err} ${req.url}`;
+            fs.appendFile('server.log', log + '\n', (error) => {
+                if (error) {
+                    console.log('Unable to log message');
+                }})}
+
+        finally {
+            res.redirect('/');
+        }
+
+})});
 
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
-
-    // MongoClient.connect("mongodb+srv://Spyder:r0PTfX3Z5lYsaLvs@cluster0-jogjo.gcp.mongodb.net/test?retryWrites=true", function (err, client) {
-    //     if (err) {
-    //         return console.log("Unable to connect to DB");
-    //     }
-    //     console.log('Successfully connected to MongoDB server');
-    //     client.close();
-    //
-    // });
 });
 
 
