@@ -14,6 +14,8 @@
     "express": "^4.16.4",
     "generate-password": "^1.4.1",
     "hbs": "^4.0.3",
+    "mongodb": "^3.2.3",
+    "mongodb-utils": "^1.1.6",
     "random-word-by-length": "^0.1.0",
     "randomstring": "^1.1.5",
     "strong-password-generator": "^1.0.6",

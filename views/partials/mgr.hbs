@@ -1,12 +1,12 @@
 <div class="manager-div">
-	<h1 class="manager-title">Manage Your Passwords Securely</h1>
-	<p class="manager-info">Store your username, password, and URL</p>
+	<!--<h1 class="manager-title">Manage Your Passwords Securely</h1>-->
+	<!--<p class="manager-info">Store your username, password, and URL</p>-->
 
-	<form id="mgr-fom" method="POST" action="/manage">
-		<input type="text" name="username" id="username" class="username" placeholder="Enter Username"><br>
-		<input type="password" name="password" id="password" class="password" placeholder="Enter Password"><br>
-		<input type="text" name="url" id="url" class="url" placeholder="Enter URL"><br>
-		<input type="submit" value="Submit" class="mgr-submit">
+	<form id="mgr-form" method="POST" action="/addAccount">
+		<input type="text" name="website" id="website" class="website" placeholder="Enter Website" required><br>
+		<input type="password" name="password" id="password" class="password" placeholder="Enter Password" required><br>
+		<!--<input type="text" name="url" id="url" class="url" placeholder="Enter URL"><br>-->
+        <button type="submit" class="mgr-submit">Submit</button>
 	</form>
 	<p class="output" id="output">{{output}}</p>
 
