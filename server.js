@@ -148,20 +148,9 @@ app.get('/manage', (request, response) => {
 
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
-    // if (!request.session.email){
-    //     var account = {
-    //         email: request.body.email,
-    //         website: request.body.website,
-    //         password: request.body.password
-    //     };
-    // }else
-    //     var account = {
-    //         email: request.body.email,
-    //         website: request.body.website,
-    //         password: request.body.password
-    //     };
+
     var account = {
-        email: request.body.email,
+        email: request.session.email,
         website: request.body.website,
         password: request.body.password};
 
@@ -197,7 +186,7 @@ app.get('/getWebsite', function(request, response) {
 //Get all passwords associated with an email
 app.get('/getEmail', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
 
     var db = utils.getDb();
     db.collection('accounts').find({email: email}).toArray(function(err, result) {
@@ -210,7 +199,7 @@ app.get('/getEmail', function(request, response) {
 //Delete a password using the associated website
 app.delete('/delWebsite', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
     var websites = request.body.websites;
 
     var db = utils.getDb();
@@ -290,7 +279,7 @@ app.post('/breach', urlencodedParser, (request, response) => {
 });
 app.post('/login-entry', (req, res) => {
     let db = utils.getDb();
-    db.collection('users').find({_id: req.session.email}).toArray((err, result) => {
+    db.collection('users').find({_id: req.body.email}).toArray((err, result) => {
         if (err) {
             res.send(err)
         }
@@ -314,7 +303,7 @@ app.post('/newUser', function (req, res) {
     var db = utils.getDb();
 
     db.collection('users').insertOne({
-        _id: req.session.email,
+        _id: req.body.email,
         hash: bcrypt.hashSync(req.body.password, 10)
     }, (err, result) => {
         if (err) {
