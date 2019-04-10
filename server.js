@@ -86,6 +86,33 @@ app.get('/sign-up', (request, response) => {
     });
 });
 
+app.get('/find', (request, response) => {
+    response.render('findpassword.hbs', {
+        title: 'Find Password'
+    });
+});
+
+app.get('/findall', (request, response) => {
+    response.render('findallpasswords.hbs', {
+        title: 'Find All Passwords'
+    });
+});
+
+app.get('/delete', (request, response) => {
+    response.render('deletepassword.hbs', {
+        title: 'Delete a Password'
+    });
+});
+
+app.get('/deleteall', (request, response) => {
+    response.render('deleteallpasswords.hbs', {
+        title: 'Delete All Passwords'
+    });
+});
+
+
+
+
 app.get('/manage', (request, response) => {
     if (request.session.id != null){
         console.log("Session works")
@@ -104,6 +131,11 @@ app.get('/manage', (request, response) => {
 // 	});
 // });
 
+
+
+// MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD
+
+
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
 
@@ -114,7 +146,7 @@ app.post('/addAccount', function(request, response) {
 	};
 
 	var db = utils.getDb();
-	db.collection('accounts').insertOne(account, function (err, result) {
+	db.collection('accounts').insertOne(account, function(err, result) {
 		if (err) {
 			response.send('Unable to insert account');
 		}
@@ -127,6 +159,65 @@ app.post('/addAccount', function(request, response) {
 	});
 
 });
+
+//Get a single entry password using website
+app.get('/getWebsite', function(request, response) {
+
+    var email = request.body.email;
+    var websites = request.body.websites;
+
+    var db = utils.getDb();
+    db.collection('accounts').find({ $and: [{email: email}, {websites: websites}] }).toArray(function(err, result) {
+        if (err) throw err;
+        response.send(result)
+    });
+
+});
+
+//Get all passwords associated with an email
+app.get('/getEmail', function(request, response) {
+
+    var email = request.body.email;
+
+    var db = utils.getDb();
+    db.collection('accounts').find({email: email}).toArray(function(err, result) {
+        if (err) throw err;
+        response.send(result)
+    });
+
+});
+
+//Delete a password using the associated website
+app.delete('/delWebsite', function(request, response) {
+
+    var email = request.body.email;
+    var websites = request.body.websites;
+
+    var db = utils.getDb();
+    db.collection('accounts').deleteOne({ $and: [{email: email}, {websites: websites}] }, function(err, result) {
+        if (err) throw err;
+        response.send(result)
+    });
+
+});
+
+///Delete all passwords and websites associated with an email
+app.delete('/delEmail', function(request,response) {
+
+    var email = request.body.email;
+
+    var db = utils.getDb();
+    db.collection('accounts').deleteMany({email: email}, function(err, result) {
+    }, (err, result) => {
+        if (err) {
+            response.send('Unable to delete')
+        }
+        response.send(JSON.stringify(result.ops, undefined, 2))
+    });
+});
+
+
+// MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD MANAGE PASSWORD
 
 app.post('/breach', urlencodedParser, (request, response) => {
 	breach.passwords_breach_lookup(request.body.password).then((message) => {
