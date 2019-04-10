@@ -236,7 +236,6 @@ app.post('/delEmail', function(request,response) {
 
     var db = utils.getDb();
     db.collection('accounts').deleteMany({email: email}, function(err, result) {
-    }, (err, result) => {
         if (err) {
             response.send('Unable to delete')
         }
