@@ -244,13 +244,13 @@ app.delete('/delEmail', function(request,response) {
 app.post('/breach', urlencodedParser, (request, response) => {
 	breach.passwords_breach_lookup(request.body.password).then((message) => {
 		response.render('breach.hbs', {
-
+			title: 'Breach',
+			output: message
 		});
 
 		app.get('/breach', (request, response) => {
 			response.render('breach.hbs', {
 				title: 'Breach',
-				output: message
 			});
 		});
 	}).catch((error) => {
