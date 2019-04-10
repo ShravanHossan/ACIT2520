@@ -312,6 +312,12 @@ app.post('/login-entry', (req, res) => {
     })
 });
 
+app.get('/newUser', function(request, response) {
+	response.render('sign-up.hbs', {
+		title: 'Sign up'
+	});
+});
+
 app.post('/newUser', function (req, res) {
     var db = utils.getDb();
 

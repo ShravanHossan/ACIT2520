@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
-
-
+    {{> header}}
 
 <body style="background-color: #FFA07A;">
 
@@ -10,16 +9,17 @@
 
 <!--sign-up Page-->
 <div id="sign-up-div" >
-    <h1 class="sign-up-title">sign-up</h1>
+    <h1 class="breach-title">Sign Up</h1>
     <form id="sign-up-form" method="POST" action="/newUser">
-        Email: <br>
-        <input type="email" id="userInputEmail" name="email" placeholder="Enter an email"> <br>
-        Password: <br>
-        <input type="text" id="userInputPassword" name="password" placeholder="Enter a password"> <br>
-        <input type="submit" value="Submit" class="submit">
+        <p class="emailtext">Email:</p> <br>
+        <input type="email" id="userInputEmail" class="userEmail" name="email" placeholder="Enter an email"> <br>
+        <p class="passwordtext">Password:</p><br>
+        <input type="text" id="userInputPassword" class="password" name="password" placeholder="Enter a password"> <br>
+        <input type="submit" value="Submit" class="mgr-submit">
     </form>
     <p class="err" id="err">{{error}}</p>
 </div>
+
 
 <!-- Open and Close Side Menu -->
 <script>
@@ -30,6 +30,7 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 }
+
 </script>
 
 </body>
