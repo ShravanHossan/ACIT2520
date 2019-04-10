@@ -179,7 +179,7 @@
 			transform: translate(-50%, -50%);
 		}
 
-		.username {
+		.userEmail {
 			position: absolute;
 			top: 40%;
 			left: 50%;
@@ -193,9 +193,9 @@
 			transform: translate(-50%, -50%);
 		}
 
-		.password {
+		.userPassword {
 			position: absolute;
-			top: 45%;
+			top: 50%;
 			left: 50%;
 			width: 30%;
 			padding: 12px 20px;
@@ -207,9 +207,23 @@
 			transform: translate(-50%, -50%);
 		}
 
-		.url {
+		.password {
 			position: absolute;
 			top: 50%;
+			left: 50%;
+			width: 30%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			transform: translate(-50%, -50%);
+		}
+
+		.website {
+			position: absolute;
+			top: 40%;
 			left: 50%;
 			width: 30%;
 			padding: 12px 20px;
@@ -247,9 +261,50 @@
 			box-shadow: 0 5px #666;
 		}
 
+		.Login-title {
+			font-size: 36px;
+			position: absolute;
+			top: 30%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
+		.loginsubmit {
+			position: absolute;
+			top: 60%;
+			left: 50%;
+			display: inline-block;
+			padding: 12px 20px;
+			font-size: 24px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: #fff;
+			background-color: #7cd1f9;
+			border: none;
+			border-radius: 15px;
+			box-shadow: 0 9px #999;
+			transform: translate(-50%, -50%);
+		}
+
+		.loginsubmit:hover {background-color: #3dafe5}
+
+		.loginsubmit:active {
+			background-color: #3dafe5;
+			box-shadow: 0 5px #666;
+		}
+
+		.err {
+			position: absolute;
+			top: 70%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+
 	</style>
     <body>
-    <a role="button" href="/login" class="btn btn-primary">Sign-in</a>
-    <a role="button" href="/sign-out" class="btn btn-primary">Sign-out</a>
+    <a style="float: right" role="button" href="/sign-out" class="btn btn-primary">Sign-out</a>
+    <a style="float: right" role="button" href="/login" class="btn btn-primary">Sign-in</a>
     </body>
 </head>
