@@ -184,7 +184,7 @@ app.post('/addAccount', function(request, response) {
 
 //Get a single entry password using website
 app.get('/getWebsite', function(request, response) {
-
+    console.log(request.session.email);
     var email = request.session.email;
     var websites = request.body.websites;
 
