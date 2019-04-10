@@ -18,7 +18,7 @@
     "express-session": "^1.15.6",
     "generate-password": "^1.4.1",
     "hbs": "^4.0.3",
-    "mongodb": "latest",
+    "mongodb": "^3.2.3",
     "mongodb-utils": "^1.1.6",
     "node-session": "^1.2.1",
     "random-word-by-length": "^0.1.0",
