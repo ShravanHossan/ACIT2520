@@ -148,18 +148,23 @@ app.get('/manage', (request, response) => {
 
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
-    if (request.session.id != null){
-    }else
-        var db = utils.getDb();
-        db.collection.find({_id: request.session.email}).toArray((err, email) => {
+    // if (!request.session.email){
+    //     var account = {
+    //         email: request.body.email,
+    //         website: request.body.website,
+    //         password: request.body.password
+    //     };
+    // }else
+    //     var account = {
+    //         email: request.body.email,
+    //         website: request.body.website,
+    //         password: request.body.password
+    //     };
+    var account = {
+        email: request.body.email,
+        website: request.body.website,
+        password: request.body.password};
 
-    });
-
-	var account = {
-        email: request.session.email,
-		website: request.body.website,
-		password: request.body.password
-	};
 
 	db.collection('accounts').insertOne(account, function (err, result) {
 		if (err) {
@@ -192,7 +197,7 @@ app.get('/getWebsite', function(request, response) {
 //Get all passwords associated with an email
 app.get('/getEmail', function(request, response) {
 
-    var email = request.session.email;
+    var email = request.body.email;
 
     var db = utils.getDb();
     db.collection('accounts').find({email: email}).toArray(function(err, result) {
@@ -205,7 +210,7 @@ app.get('/getEmail', function(request, response) {
 //Delete a password using the associated website
 app.delete('/delWebsite', function(request, response) {
 
-    var email = request.session.email;
+    var email = request.body.email;
     var websites = request.body.websites;
 
     var db = utils.getDb();
@@ -292,7 +297,7 @@ app.post('/login-entry', (req, res) => {
         try {
             if (bcrypt.compareSync(req.body.password, (result[0].hash))) {
 
-                req.session.email = req.session.email;
+                req.session.email = req.result.email;
                 res.redirect('/manage');
             } else
                 res.send("Password is not correct")
