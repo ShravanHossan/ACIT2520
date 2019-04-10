@@ -149,18 +149,14 @@ app.get('/manage', (request, response) => {
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
     if (request.session.id != null){
-
-
     }else
         var db = utils.getDb();
-        db.collection.find({_id: request.session.user}).toArray((err, email) => {
+        db.collection.find({_id: request.session.email}).toArray((err, email) => {
 
     });
 
-
-
 	var account = {
-        email: email._id,
+        email: request.session.email,
 		website: request.body.website,
 		password: request.body.password
 	};
@@ -182,7 +178,7 @@ app.post('/addAccount', function(request, response) {
 //Get a single entry password using website
 app.get('/getWebsite', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
     var websites = request.body.websites;
 
     var db = utils.getDb();
@@ -196,7 +192,7 @@ app.get('/getWebsite', function(request, response) {
 //Get all passwords associated with an email
 app.get('/getEmail', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
 
     var db = utils.getDb();
     db.collection('accounts').find({email: email}).toArray(function(err, result) {
@@ -209,7 +205,7 @@ app.get('/getEmail', function(request, response) {
 //Delete a password using the associated website
 app.delete('/delWebsite', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
     var websites = request.body.websites;
 
     var db = utils.getDb();
@@ -223,7 +219,7 @@ app.delete('/delWebsite', function(request, response) {
 ///Delete all passwords and websites associated with an email
 app.delete('/delEmail', function(request,response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
 
     var db = utils.getDb();
     db.collection('accounts').deleteMany({email: email}, function(err, result) {
@@ -289,14 +285,14 @@ app.post('/breach', urlencodedParser, (request, response) => {
 });
 app.post('/login-entry', (req, res) => {
     let db = utils.getDb();
-    db.collection('users').find({_id: req.body.email}).toArray((err, result) => {
+    db.collection('users').find({_id: req.session.email}).toArray((err, result) => {
         if (err) {
             res.send(err)
         }
         try {
             if (bcrypt.compareSync(req.body.password, (result[0].hash))) {
 
-                req.session.user = req.body.email;
+                req.session.email = req.session.email;
                 res.redirect('/manage');
             } else
                 res.send("Password is not correct")
@@ -313,7 +309,7 @@ app.post('/newUser', function (req, res) {
     var db = utils.getDb();
 
     db.collection('users').insertOne({
-        _id: req.body.email,
+        _id: req.session.email,
         hash: bcrypt.hashSync(req.body.password, 10)
     }, (err, result) => {
         if (err) {
@@ -332,7 +328,7 @@ app.get('/sign-out', (req, res) => {
     req.session.destroy(function (err) {
 
         try {
-            console.log(req.session.user)
+            console.log(req.session.email)
         }catch(e){
             let time = new Date().toString();
             let log = `${time}: ${err} ${req.url}`;
