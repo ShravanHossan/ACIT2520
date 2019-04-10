@@ -81,13 +81,19 @@ app.get('/sign-up', (request, response) => {
 });
 
 app.get('/manage', (request, response) => {
+    if (request.session.id != null){
+        console.log("Session works")
+    }
 	response.render('manager.hbs', {
 		title: 'Password Manager'
 	});
 });
 
 app.post('/manage', urlencodedParser, (request, response) => {
-	request.session.
+	if (request.session.id != null){
+	    console.log("Session works")
+    }
+
     manager.add_password(request.body.username, request.body.url, request.body.password).then((message) => {
 		response.render('manager.hbs', {
 			title: 'Password Manager',
