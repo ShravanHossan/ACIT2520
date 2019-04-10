@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 
-	<!--{{> header}}-->
+	{{> header}}
 
 <body style="background-color: #FFA07A;">
 
@@ -12,13 +12,14 @@
 <div id="login-div" >
     <h1 class="Login-title">Login</h1>
     <form id="login-form" method="POST" action="/login-entry">
-        Email: <br>
-        <input type="text" id="userInputEmail" name="email" placeholder="Enter an email"> <br>
-        Password: <br>
-        <input type="text" id="userInputPassword" name="password" placeholder="Enter a password"> <br>
-        <input type="submit" value="Submit" class="submit">
+
+        <input type="text" id="userInputEmail" class="userEmail" name="email" placeholder="Enter an email"> <br>
+        <input type="text" id="userInputPassword" class="userPassword" name="password" placeholder="Enter a password"> <br>
+        <input type="submit" value="Submit" class="loginsubmit">
+
     </form>
     <p class="err" id="err">{{error}}</p>
+    <a style="" role="button" href="/forgot-password" class="btn btn-danger">Forgot Password</a>
 </div>
 
 <!-- Open and Close Side Menu -->
