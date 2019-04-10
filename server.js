@@ -210,7 +210,7 @@ app.get('/getEmail', function(request, response) {
 });
 
 //Delete a password using the associated website
-app.delete('/delWebsite', function(request, response) {
+app.post('/delWebsite', function(request, response) {
 
     var email = request.session.email;
     var websites = request.body.websites;
@@ -224,7 +224,7 @@ app.delete('/delWebsite', function(request, response) {
 });
 
 ///Delete all passwords and websites associated with an email
-app.delete('/delEmail', function(request,response) {
+app.post('/delEmail', function(request,response) {
 
     var email = request.session.email;
 
