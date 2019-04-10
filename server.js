@@ -327,7 +327,7 @@ app.post('/newUser', function (req, res) {
     }, (err, result) => {
         if (err) {
             res.render("sign-up.hbs", {
-                error: err
+                error: "User already exists"
             })
         }
         else
