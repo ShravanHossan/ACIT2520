@@ -309,7 +309,11 @@ app.post('/login-entry', (req, res) => {
                 req.session.email = req.body.email;
                 res.redirect('/manage');
             } else
-                res.send("Password is not correct")
+                //res.send("Password is not correct")
+                res.render('login.hbs', {
+                	title: 'login',
+                	error: 'Incorrect Password'
+                })
         } catch (e) {
             res.render('login.hbs', {
                 title: 'login ',
