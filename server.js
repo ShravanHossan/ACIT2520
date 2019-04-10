@@ -8,13 +8,28 @@ const breach = require('./public/breach.js');
 const utils = require('./public/utils.js');
 const MongoClient = require('mongodb').MongoClient;
 const session = require('express-session');
-const cookieSession = require('cookie-session');
+
+
+
 
 const port = process.env.PORT || 8080;
+
 var app = express();
 
-app.use(session({secret: "very safe", cookie: {}}));
+
+app.set('trust proxy', 1); // trust first proxy
+app.use(session({
+    secret: 'very safe',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 var urlencodedParser = bodyParser.urlencoded({extended: false});
+
+
+// start session for an http request - response
+// this will define a session property to the request object
+
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -69,8 +84,9 @@ app.get('/manage', (request, response) => {
         response.redirect("/login");
     }
     else
-        console.log('here we are')
-
+        console.log('here we are');
+    if (request.signedCookies != null)
+        console.log("Echo")
 
 });
 
@@ -101,18 +117,18 @@ app.post('/login-entry', (req, res) => {
         if (err) {
             res.send(err)
         }
-
-        // res.send((result[0].hash));
         try {
             if (bcrypt.compareSync(req.body.password, (result[0].hash))) {
                 console.log("good login");
 
-                res.session.put('key', req.body.email);
+                req.session.user = req.body.email;
                 res.redirect('/manage');
             } else
                 res.send("Password is not correct")
         } catch (e) {
-            res.send("User doesn't exist")
+            res.render('login.hbs', {
+                title: 'login ',
+                error: "User does not exist"})
         }
 
     })
@@ -126,25 +142,33 @@ app.post('/newUser', function (req, res) {
         hash: bcrypt.hashSync(req.body.password, 10)
     }, (err, result) => {
         if (err) {
-            res.send(err.errmsg)
+            res.render("sign-up.hbs", {
+                error: err
+            })
         }
-        res.send(result)
-        // res.send(result.ops)
+        else
+
+            res.redirect('/login')
+
     })
+});
+
+app.post('/signout', (req, res) => {
+    req.session.destroy()
 });
 
 
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 
-    MongoClient.connect("mongodb+srv://Spyder:r0PTfX3Z5lYsaLvs@cluster0-jogjo.gcp.mongodb.net/test?retryWrites=true", function (err, client) {
-        if (err) {
-            return console.log("Unable to connect to DB");
-        }
-        console.log('Successfully connected to MongoDB server');
-        client.close();
-
-    });
+    // MongoClient.connect("mongodb+srv://Spyder:r0PTfX3Z5lYsaLvs@cluster0-jogjo.gcp.mongodb.net/test?retryWrites=true", function (err, client) {
+    //     if (err) {
+    //         return console.log("Unable to connect to DB");
+    //     }
+    //     console.log('Successfully connected to MongoDB server');
+    //     client.close();
+    //
+    // });
 });
 
 
