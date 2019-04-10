@@ -239,7 +239,9 @@ app.post('/delEmail', function(request,response) {
         if (err) {
             response.send('Unable to delete')
         }
-        response.send(JSON.stringify(result.ops, undefined, 2))
+        //response.send(JSON.stringify(result.ops, undefined, 2))
+        response.redirect("/manage");
+
     });
 });
 
