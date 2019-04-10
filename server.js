@@ -226,7 +226,7 @@ app.delete('/delWebsite', function(request, response) {
 ///Delete all passwords and websites associated with an email
 app.delete('/delEmail', function(request,response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
 
     var db = utils.getDb();
     db.collection('accounts').deleteMany({email: email}, function(err, result) {
@@ -292,7 +292,7 @@ app.post('/breach', urlencodedParser, (request, response) => {
 });
 app.post('/login-entry', (req, res) => {
     let db = utils.getDb();
-    db.collection('users').find({_id: req.body.email}).toArray((err, result) => {
+    db.collection('users').find({_id: req.session.email}).toArray((err, result) => {
         if (err) {
             res.send(err)
         }
@@ -316,7 +316,7 @@ app.post('/newUser', function (req, res) {
     var db = utils.getDb();
 
     db.collection('users').insertOne({
-        _id: req.body.email,
+        _id: req.session.email,
         hash: bcrypt.hashSync(req.body.password, 10)
     }, (err, result) => {
         if (err) {
@@ -335,7 +335,7 @@ app.get('/sign-out', (req, res) => {
     req.session.destroy(function (err) {
 
         try {
-            console.log(req.session.user)
+            console.log(req.session.email)
         }catch(e){
             let time = new Date().toString();
             let log = `${time}: ${err} ${req.url}`;
