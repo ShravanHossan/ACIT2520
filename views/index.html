@@ -164,6 +164,7 @@
 	<div id="mySidenav" class="sidenav">
 	  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 	  <a href="/">Home</a>
+		<a href="/login">Login</a>
 	  <a href="/generate">Generate Passwords</a>
 	  <a href="/manage">Manage Passwords</a>
 	  <a href="/breach">Breach Logs</a>
@@ -173,12 +174,14 @@
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
 
 <!-- Breach Main Page -->
-<div id="breach-div" >
-		<h1 class="breach-title">Has Your Password Been Breached?</h1>
-		<p class="page-info">Enter a password in the text box below to see how many times the password has been breached.</p>
-		<input type="text" id="userInput" name="input" placeholder="Enter Password">
-		<input onclick="" type="submit" class="submit" id="submitbutton" value="Submit">
-</div>
+<!--<div id="breach-div" >-->
+		<!--<h1 class="breach-title">Has Your Password Been Breached?</h1>-->
+		<!--<p class="page-info">Enter a password in the text box below to see how many times the password has been breached.</p>-->
+		<!--<input type="text" id="userInput" name="input" placeholder="Enter Password">-->
+		<!--<input onclick="" type="submit" class="submit" id="submitbutton" value="Submit">-->
+<!--</div>-->
+
+
 
 
 
@@ -196,7 +199,7 @@ function closeNav() {
 const userValue = () => {
 	var user = document.getElementById("userInput").value;
 	return user
-}
+};
 
 module.exports = {
 	userValue

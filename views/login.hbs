@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<!--{{> header}}-->
+
+<body style="background-color: #FFA07A;">
+
+<!-- control panel -->
+	{{> control}}
+
+<!--Login Page-->
+<div id="login-div" >
+    <h1 class="Login-title">Login</h1>
+    <form id="login-form" method="POST" action="/login-entry">
+        Email: <br>
+        <input type="text" id="userInputEmail" name="email" placeholder="Enter an email"> <br>
+        Password: <br>
+        <input type="text" id="userInputPassword" name="password" placeholder="Enter a password"> <br>
+        <input type="submit" value="Submit" class="submit">
+    </form>
+    <p class="err" id="err">{{error}}</p>
+</div>
+
+<!-- Open and Close Side Menu -->
+<script>
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<div id="login-div" >
+	<h1 class="Login-title">Login</h1>
+	<!--<p class="page-info">Enter a password in the text box below to see how many times the password has been breached.</p>-->
+
+	<form id="login-form" method="POST" action="/login">
+        <input type="text" id="userInputEmail" name="email" placeholder="Enter an email">
+		<input type="text" id="userInputPassword" name="password" placeholder="Enter a password">
+		<input type="submit" value="Submit" class="submit">
+	</form>
+	<p class="err" id="err">{{error}}</p>
+</div>
