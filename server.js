@@ -128,7 +128,8 @@ app.get('/deleteall', (request, response) => {
 app.get('/manage', (request, response) => {
 
 	response.render('manager.hbs', {
-		title: 'Password Manager'
+		title: 'Password Manager',
+        message: ''
 	});
 });
 
@@ -148,28 +149,30 @@ app.get('/manage', (request, response) => {
 
 //Add an email, website, and password to the database
 app.post('/addAccount', function(request, response) {
-    if (request.session.id != null){
+    // if (request.session.id != null){
 
 
-    }else
-        var db = utils.getDb();
-        db.collection.find({_id: request.session.user}).toArray((err, email) => {
-
-    });
-
+    // }else
+    //     var db = utils.getDb();
+    //     db.collection('acc').find({_id: request.session.user}).toArray((err, email) => {
+    //
+    // });
+    //
 
 
 	var account = {
-        email: email._id,
+        email: request.session.email,
 		website: request.body.website,
 		password: request.body.password
 	};
-
+    var db = utils.getDb();
 	db.collection('accounts').insertOne(account, function (err, result) {
 		if (err) {
 			response.send('Unable to insert account');
 		}
 		response.send(JSON.stringify(result.ops, undefined, 2))
+        // response.redirect("/manage/added")
+
 		// response.send("Password Added Successfully.")
 		// response.render('manager.hbs', {
 		// 	title: 'Manager',
@@ -182,7 +185,7 @@ app.post('/addAccount', function(request, response) {
 //Get a single entry password using website
 app.get('/getWebsite', function(request, response) {
 
-    var email = request.body.email;
+    var email = request.session.email;
     var websites = request.body.websites;
 
     var db = utils.getDb();
@@ -296,7 +299,7 @@ app.post('/login-entry', (req, res) => {
         try {
             if (bcrypt.compareSync(req.body.password, (result[0].hash))) {
 
-                req.session.user = req.body.email;
+                req.session.email = req.body.email;
                 res.redirect('/manage');
             } else
                 res.send("Password is not correct")
